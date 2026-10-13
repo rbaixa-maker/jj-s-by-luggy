@@ -52,6 +52,53 @@
         linear-gradient(295deg, transparent 0 57%, rgba(214,179,106,.025) 58%, transparent 59%);
     }
 
+    .language-selector {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(11, 23, 42, 0.78);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.22);
+    }
+
+    .lang-btn {
+      width: 36px;
+      height: 32px;
+      border: 0;
+      border-radius: 11px;
+      background: transparent;
+      cursor: pointer;
+      font-size: 20px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .lang-btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.08);
+    }
+
+    .lang-btn.active {
+      background: rgba(214,179,106,.20);
+      box-shadow: inset 0 0 0 1px rgba(214,179,106,.38);
+    }
+
+    .lang-btn:focus-visible {
+      outline: 2px solid var(--gold-light);
+      outline-offset: 2px;
+    }
+
     .page {
       width: 100%;
       max-width: 460px;
@@ -167,14 +214,32 @@
       font-weight: 500;
     }
 
-    @media (max-width: 380px) {
+    @media (max-width: 520px) {
       body {
-        padding: 14px;
+        padding: 72px 14px 14px;
+      }
+
+      .language-selector {
+        top: 12px;
+        right: 12px;
       }
 
       .card {
         padding: 34px 20px 28px;
         border-radius: 24px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .lang-btn {
+        width: 32px;
+        height: 30px;
+        font-size: 18px;
+      }
+
+      .language-selector {
+        gap: 2px;
+        padding: 4px;
       }
 
       .entry-code {
@@ -186,38 +251,149 @@
 </head>
 
 <body>
+
+  <!-- Seletor de idiomas -->
+  <nav class="language-selector" aria-label="Seleção de idioma">
+    <button class="lang-btn active" data-lang="pt" aria-label="Português" title="Português">🇵🇹</button>
+    <button class="lang-btn" data-lang="fr" aria-label="Français" title="Français">🇫🇷</button>
+    <button class="lang-btn" data-lang="en" aria-label="English" title="English">🇬🇧</button>
+    <button class="lang-btn" data-lang="de" aria-label="Deutsch" title="Deutsch">🇩🇪</button>
+    <button class="lang-btn" data-lang="it" aria-label="Italiano" title="Italiano">🇮🇹</button>
+    <button class="lang-btn" data-lang="es" aria-label="Español" title="Español">🇪🇸</button>
+  </nav>
+
   <main class="page">
     <section class="card" aria-label="Código de entrada">
 
       <div class="brand-mark" aria-hidden="true">JJ</div>
 
-      <div class="eyebrow">Bem-vindo</div>
+      <div class="eyebrow" data-i18n="welcome">Bem-vindo</div>
 
       <h1>JJ´s by Luggy</h1>
 
-      <p class="subtitle">
+      <p class="subtitle" data-i18n="subtitle">
         Utilize o código abaixo para entrar na loja.
       </p>
 
-      <div class="code-label">Código de entrada</div>
+      <div class="code-label" data-i18n="codeLabel">Código de entrada</div>
 
       <div class="code-box">
         <!-- ALTERAR APENAS O NÚMERO ABAIXO QUANDO FOR NECESSÁRIO -->
         <div class="entry-code" id="entryCode">3719</div>
       </div>
 
-      <p class="instruction">
+      <p class="instruction" data-i18n="instruction">
         Apresente este código à entrada da loja.
       </p>
 
       <div class="divider"></div>
 
       <p class="footer">
-        Obrigado pela sua visita.<br>
+        <span data-i18n="thanks">Obrigado pela sua visita.</span><br>
         <strong>JJ´s by Luggy</strong>
       </p>
 
     </section>
   </main>
+
+  <script>
+    const translations = {
+      pt: {
+        pageTitle: "JJ´s by Luggy — Código de entrada",
+        welcome: "Bem-vindo",
+        subtitle: "Utilize o código abaixo para entrar na loja.",
+        codeLabel: "Código de entrada",
+        instruction: "Apresente este código à entrada da loja.",
+        thanks: "Obrigado pela sua visita."
+      },
+      fr: {
+        pageTitle: "JJ´s by Luggy — Code d'entrée",
+        welcome: "Bienvenue",
+        subtitle: "Utilisez le code ci-dessous pour entrer dans le magasin.",
+        codeLabel: "Code d'entrée",
+        instruction: "Présentez ce code à l'entrée du magasin.",
+        thanks: "Merci de votre visite."
+      },
+      en: {
+        pageTitle: "JJ´s by Luggy — Entry code",
+        welcome: "Welcome",
+        subtitle: "Use the code below to enter the store.",
+        codeLabel: "Entry code",
+        instruction: "Please show this code at the store entrance.",
+        thanks: "Thank you for your visit."
+      },
+      de: {
+        pageTitle: "JJ´s by Luggy — Zugangscode",
+        welcome: "Willkommen",
+        subtitle: "Verwenden Sie den folgenden Code, um den Laden zu betreten.",
+        codeLabel: "Zugangscode",
+        instruction: "Zeigen Sie diesen Code am Eingang des Ladens vor.",
+        thanks: "Vielen Dank für Ihren Besuch."
+      },
+      it: {
+        pageTitle: "JJ´s by Luggy — Codice di ingresso",
+        welcome: "Benvenuti",
+        subtitle: "Utilizza il codice qui sotto per entrare nel negozio.",
+        codeLabel: "Codice di ingresso",
+        instruction: "Mostra questo codice all'ingresso del negozio.",
+        thanks: "Grazie per la visita."
+      },
+      es: {
+        pageTitle: "JJ´s by Luggy — Código de entrada",
+        welcome: "Bienvenido",
+        subtitle: "Utiliza el código de abajo para entrar en la tienda.",
+        codeLabel: "Código de entrada",
+        instruction: "Muestra este código en la entrada de la tienda.",
+        thanks: "Gracias por su visita."
+      }
+    };
+
+    const htmlLang = {
+      pt: "pt-PT",
+      fr: "fr-FR",
+      en: "en-GB",
+      de: "de-DE",
+      it: "it-IT",
+      es: "es-ES"
+    };
+
+    function setLanguage(lang) {
+      const t = translations[lang];
+      if (!t) return;
+
+      document.documentElement.lang = htmlLang[lang];
+      document.title = t.pageTitle;
+
+      document.querySelectorAll("[data-i18n]").forEach(element => {
+        const key = element.getAttribute("data-i18n");
+        if (t[key]) element.textContent = t[key];
+      });
+
+      document.querySelectorAll(".lang-btn").forEach(button => {
+        const active = button.dataset.lang === lang;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+
+      try {
+        localStorage.setItem("jjsLanguage", lang);
+      } catch (e) {}
+    }
+
+    document.querySelectorAll(".lang-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        setLanguage(button.dataset.lang);
+      });
+    });
+
+    // Mantém o idioma escolhido quando o visitante voltar à página.
+    let savedLanguage = "pt";
+    try {
+      savedLanguage = localStorage.getItem("jjsLanguage") || "pt";
+    } catch (e) {}
+
+    setLanguage(translations[savedLanguage] ? savedLanguage : "pt");
+  </script>
+
 </body>
 </html>
